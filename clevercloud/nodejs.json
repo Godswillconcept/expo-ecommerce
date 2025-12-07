@@ -1,0 +1,10 @@
+{
+  "build": {
+    "type": "nodejs",
+    "build": "npm run install-all && npm run build"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "buildDirectory": "."
+  }
+}
