@@ -1,20 +1,25 @@
 {
   "name": "expo-ecommerce",
   "version": "1.0.0",
-  "description": "",
+  "description": "Expo E-commerce Application",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --prefix backend && npm install --prefix admin && npm run build --prefix admin",
-    "start": "npm run start --prefix backend"
+    "install-all": "npm install && npm install --prefix backend && npm install --prefix admin",
+    "build": "npm run build --prefix admin",
+    "start": "node backend/src/server.js",
+    "heroku-prebuild": "echo 'Running prebuild script...'",
+    "heroku-postbuild": "npm run install-all && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Godswillconcept/expo-ecommerce.git"
   },
-  "keywords": [],
+  "keywords": ["ecommerce", "expo", "react", "node"],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "bugs": {
     "url": "https://github.com/Godswillconcept/expo-ecommerce/issues"
   },
