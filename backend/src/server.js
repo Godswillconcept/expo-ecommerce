@@ -3,7 +3,7 @@ import path from 'path';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
-import { ENV } from './config/env';
+import { ENV } from './config/env.js';
 
 const app = express();
 const __dirname = path.resolve();
