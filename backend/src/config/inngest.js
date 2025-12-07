@@ -6,7 +6,7 @@ import { getEnv } from "./env.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({
   id: "ecommerce-app",
-  signingKey: getEnv("INGEST_SIGNING_KEY"),
+  signingKey: getEnv("INNGEST_SIGNING_KEY"),
 });
 
 const syncUser = inngest.createFunction(
