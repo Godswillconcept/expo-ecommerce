@@ -1,0 +1,17 @@
+{
+    "build": {
+        "type": "nodejs",
+        "build": {
+            "type": "custom",
+            "cmd": [
+                "npm install --prefix backend",
+                "npm install --prefix admin",
+                "cd admin && npm run build"
+            ]
+        }
+    },
+    "deploy": {
+        "startCommand": "node backend/src/server.js",
+        "buildDirectory": "."
+    }
+}
