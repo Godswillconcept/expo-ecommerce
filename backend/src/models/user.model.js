@@ -15,17 +15,18 @@ const User = sequelize.define('User', {
       isEmail: true,
     },
   },
-  password: {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  clerkId: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  lastName: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    unique: true,
   },
   role: {
     type: DataTypes.ENUM('user', 'admin'),
@@ -39,5 +40,22 @@ const User = sequelize.define('User', {
   tableName: 'users', // Explicitly set the table name
   timestamps: true,   // Automatically add createdAt and updatedAt
 });
+
+// Relationships
+User.associate = (models) => {
+  // A user can have many addresses
+  User.hasMany(models.Address, {
+    foreignKey: 'userId',
+    as: 'addresses',
+    onDelete: 'CASCADE'
+  });
+
+  // A user can have many wishlist items
+  User.hasMany(models.Wishlist, {
+    foreignKey: 'userId',
+    as: 'wishlistItems',
+    onDelete: 'CASCADE'
+  });
+};
 
 export default User;

@@ -6,20 +6,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load environment variables from .env file
-dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
-// Required environment variables
+// Required environment variables (excluding DB_PASSWORD which can be empty)
 const requiredEnvVars = [
   "DB_HOST",
   "DB_PORT",
   "DB_NAME",
   "DB_USER",
-  "DB_PASSWORD",
   "CLERK_PUBLISHABLE_KEY",
   "CLERK_SECRET_KEY",
 ];
 
-// Check for missing required environment variables
+// Check for missing required environment variables (excluding empty strings for DB_PASSWORD)
 const missingVars = requiredEnvVars.filter((varName) => !process.env[varName]);
 if (missingVars.length > 0 && process.env.NODE_ENV !== "test") {
   console.error(
@@ -43,7 +42,7 @@ export const ENV = {
     PASSWORD: process.env.DB_PASSWORD,
     URL:
       process.env.DB_URL ||
-      `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT || 3306}/${process.env.DB_NAME}`,
+      `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD || ''}@${process.env.DB_HOST}:${process.env.DB_PORT || 3306}/${process.env.DB_NAME}`,
     DIALECT: "mysql",
     POOL: {
       max: 5,
