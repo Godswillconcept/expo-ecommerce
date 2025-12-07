@@ -4,11 +4,11 @@
   "description": "Expo E-commerce Application",
   "main": "index.js",
   "scripts": {
-    "install-all": "npm install && npm install --prefix backend && npm install --prefix admin",
-    "build": "npm run build --prefix admin",
-    "start": "node backend/src/server.js",
-    "heroku-prebuild": "echo 'Running prebuild script...'",
-    "heroku-postbuild": "npm run install-all && npm run build"
+    "install-all": "npm install && cd backend && npm install && cd ../admin && npm install",
+    "build": "cd admin && npm run build",
+    "start": "cd backend && node src/server.js",
+    "preinstall": "cd backend && npm install",
+    "postinstall": "cd admin && npm install"
   },
   "repository": {
     "type": "git",
