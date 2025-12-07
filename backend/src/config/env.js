@@ -80,18 +80,17 @@ export const ENV = {
 
   // Inngest Configuration
   INNGEST: {
-    API_KEY: getEnv("INGEST_SIGNING_KEY"),
+    SIGNING_KEY: getEnv("INNGEST_SIGNING_KEY", ""), // Fixed typo and added default
+    EVENT_KEY: getEnv("INNGEST_EVENT_KEY", ""),
   },
 
   // Cloudinary Configuration
   CLOUDINARY: {
-    CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME"),
-    API_KEY: getEnv("CLOUDINARY_API_KEY"),
-    API_SECRET: getEnv("CLOUDINARY_API_SECRET"),
+    CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME", ""),
+    API_KEY: getEnv("CLOUDINARY_API_KEY", ""),
+    API_SECRET: getEnv("CLOUDINARY_API_SECRET", ""),
   },
 };
-
-console.log(getEnv('INGEST_SIGNING_KEY'));
 
 // Export all environment variables as a flat object for direct access
 export const env = {
