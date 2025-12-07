@@ -91,6 +91,8 @@ export const ENV = {
   },
 };
 
+console.log(getEnv('INGEST_SIGNING_KEY'));
+
 // Export all environment variables as a flat object for direct access
 export const env = {
   ...process.env,
