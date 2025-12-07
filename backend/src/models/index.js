@@ -12,7 +12,7 @@ const models = {};
 const files = fs.readdirSync(modelsDir);
 files.filter(file => file.endsWith('.model.js')).forEach(file => {
   const modelName = file.split('.')[0];
-  models[modelName] = require(path.join(modelsDir, file));
+  models[modelName] = path.join(modelsDir, file);
 });
 
 // Set up associations here
