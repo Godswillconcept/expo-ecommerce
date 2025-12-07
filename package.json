@@ -2,7 +2,7 @@
   "name": "expo-ecommerce",
   "version": "1.0.0",
   "description": "Expo E-commerce Application",
-  "main": "index.js",
+  "main": "backend/src/server.js",
   "private": true,
   "scripts": {
     "start": "node backend/src/server.js",

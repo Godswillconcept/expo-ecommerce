@@ -12,7 +12,7 @@
     }
   },
   "deploy": {
-    "startCommand": "npm start",
+    "startCommand": "cd backend && node src/server.js",
     "buildDirectory": "."
   }
 }
