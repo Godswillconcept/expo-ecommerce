@@ -27,6 +27,20 @@ if (missingVars.length > 0 && process.env.NODE_ENV !== "test") {
   process.exit(1);
 }
 
+// Export a function to get any environment variable
+export const getEnv = (key, defaultValue = null) => {
+  const value = process.env[key];
+  if (value === undefined) {
+    if (defaultValue === null) {
+      throw new Error(
+        `Environment variable ${key} is not defined and no default value was provided`
+      );
+    }
+    return defaultValue;
+  }
+  return value;
+};
+
 // Export all environment variables with type conversion and defaults
 export const ENV = {
   // App Configuration
@@ -63,20 +77,18 @@ export const ENV = {
     PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
     SECRET_KEY: process.env.CLERK_SECRET_KEY,
   },
-};
 
-// Export a function to get any environment variable
-export const getEnv = (key, defaultValue = null) => {
-  const value = process.env[key];
-  if (value === undefined) {
-    if (defaultValue === null) {
-      throw new Error(
-        `Environment variable ${key} is not defined and no default value was provided`
-      );
-    }
-    return defaultValue;
-  }
-  return value;
+  // Inngest Configuration
+  INNGEST: {
+    API_KEY: getEnv("INGEST_SIGNING_KEY"),
+  },
+
+  // Cloudinary Configuration
+  CLOUDINARY: {
+    CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME"),
+    API_KEY: getEnv("CLOUDINARY_API_KEY"),
+    API_SECRET: getEnv("CLOUDINARY_API_SECRET"),
+  },
 };
 
 // Export all environment variables as a flat object for direct access
