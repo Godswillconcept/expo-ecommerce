@@ -3,7 +3,12 @@
     "type": "nodejs",
     "build": {
       "type": "custom",
-      "cmd": "npm install && npm run build"
+      "cmd": [
+        "npm install",
+        "cd backend && npm install",
+        "cd ../admin && npm install",
+        "cd .. && npm run build"
+      ]
     }
   },
   "deploy": {
