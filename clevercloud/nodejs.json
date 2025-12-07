@@ -4,15 +4,14 @@
     "build": {
       "type": "custom",
       "cmd": [
-        "npm install",
-        "cd backend && npm install",
-        "cd ../admin && npm install",
-        "cd .. && npm run build"
+        "npm install --prefix backend",
+        "npm install --prefix admin",
+        "cd admin && npm run build"
       ]
     }
   },
   "deploy": {
-    "startCommand": "cd backend && node src/server.js",
+    "startCommand": "node backend/src/server.js",
     "buildDirectory": "."
   }
 }
