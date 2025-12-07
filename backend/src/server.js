@@ -45,7 +45,7 @@ if (ENV.NODE_ENV === 'production') {
   }));
 
   // Handle SPA routing - return the index.html for all other routes
-  app.get('*', (req, res) => {
+  app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../admin/dist/index.html'));
   });
 }
