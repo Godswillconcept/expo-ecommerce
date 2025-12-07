@@ -1,12 +1,14 @@
 import express from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import { ENV } from "./config/env.js";
 
 const app = express();
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Security middleware
 app.use(helmet());
@@ -27,9 +29,13 @@ app.get("/api/health", (req, res) => {
 
 // Serve static files in production
 if (ENV.NODE_ENV === "production") {
+  // Path from backend/src/server.js to admin/dist
+  const adminDistPath = path.join(__dirname, "../../admin/dist");
+  console.log("Admin dist path:", adminDistPath);
+
   // Serve static files from the admin app
   app.use(
-    express.static(path.join(__dirname, "../admin/dist"), {
+    express.static(adminDistPath, {
       maxAge: "1y",
       etag: true,
       lastModified: true,
@@ -38,7 +44,17 @@ if (ENV.NODE_ENV === "production") {
 
   // Handle SPA routing - Express 5.x syntax for catch-all routes
   app.get("/{*any}", (req, res) => {
-    res.sendFile(path.join(__dirname, "../admin/dist/index.html"));
+    const indexPath = path.join(adminDistPath, "index.html");
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error("Error sending file:", err);
+        res.status(500).json({
+          status: "error",
+          message: "Internal Server Error",
+          error: err.message,
+        });
+      }
+    });
   });
 }
 
