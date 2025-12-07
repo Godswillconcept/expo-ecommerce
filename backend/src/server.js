@@ -5,9 +5,10 @@ import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import { ENV } from "./config/env.js";
-import { clerkMiddleware } from '@clerk/express';
+import { clerkMiddleware } from "@clerk/express";
 import { sequelize, testConnection } from "./config/database.js";
-import models from "./models/index.js";
+import { serve } from "inngest/express";
+import { inngest, functions } from "./config/inngest.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -20,6 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(clerkMiddleware());
+
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -89,19 +92,19 @@ const startServer = async () => {
   try {
     // Test database connection
     await testConnection();
-    
+
     // Sync all models
-    await sequelize.sync({ alter: ENV.NODE_ENV !== 'production' });
-    console.log('Database synced');
-    
+    await sequelize.sync({ alter: ENV.NODE_ENV !== "production" });
+    console.log("Database synced");
+
     // Start the server
     const server = app.listen(PORT, HOST, () => {
       console.log(`Server running in ${ENV.NODE_ENV} mode on ${HOST}:${PORT}`);
     });
-    
+
     return server;
   } catch (error) {
-    console.error('Failed to start server:', error);
+    console.error("Failed to start server:", error);
     process.exit(1);
   }
 };
