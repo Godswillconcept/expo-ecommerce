@@ -7,6 +7,7 @@ import compression from "compression";
 import { ENV } from "./config/env.js";
 import { clerkMiddleware } from "@clerk/express";
 import { sequelize, testConnection } from "./config/database.js";
+import "./models/index.js"; // Import models to ensure they are initialized and associated
 import { serve } from "inngest/express";
 import { inngest, functions } from "./config/inngest.js";
 
@@ -103,7 +104,7 @@ const startServer = async () => {
     await testConnection();
 
     // Sync all models
-    await sequelize.sync({ alter: ENV.NODE_ENV !== "production" });
+    await sequelize.sync();
     console.log("Database synced");
 
     // Start the server
