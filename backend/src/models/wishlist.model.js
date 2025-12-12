@@ -48,7 +48,7 @@ const Wishlist = sequelize.define('Wishlist', {
   indexes: [
     {
       unique: true,
-      fields: ['userId', 'productId'], // Prevent duplicate entries
+      fields: ['user_id', 'product_id'], // Prevent duplicate entries
     },
   ],
 });

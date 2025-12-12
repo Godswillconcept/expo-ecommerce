@@ -1,23 +1,23 @@
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { sequelize } from '../config/database.js';
+import User from './user.model.js';
+import Address from './address.model.js';
+import Wishlist from './wishlist.model.js';
+import Product from './product.model.js';
 
-const modelsDir = path.join(__dirname, '../models');
+const db = {
+  User,
+  Address,
+  Wishlist,
+  Product
+};
 
-const models = {};
-
-// Import all model files
-const files = fs.readdirSync(modelsDir);
-files.filter(file => file.endsWith('.model.js')).forEach(file => {
-  const modelName = file.split('.')[0];
-  models[modelName] = path.join(modelsDir, file);
+// Initialize associations
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
 });
 
-// Set up associations here
-// Example:
-// User.hasMany(Order);
-// Order.belongsTo(User);
+db.sequelize = sequelize;
 
-export default models;
+export default db;
