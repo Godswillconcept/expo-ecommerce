@@ -1,4 +1,10 @@
-node_modules
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# Environment variables
 .env
+
+# IDE and editor files
 .qodo
 .vscode
